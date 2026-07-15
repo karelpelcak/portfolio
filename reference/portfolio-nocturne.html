@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Karel Pelčák — Full-Stack Developer</title>
+<link rel="stylesheet" href="_ds/nocturne-62b14857-8e5e-46f6-8fc5-6d71957f9325/styles.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<style>
+  :root { --gutter: clamp(24px, 6vw, 96px); }
+  body { -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding-inline: var(--gutter); }
+  .eyebrow { font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--color-accent-300); display: inline-flex; align-items: center; gap: 12px; font-weight: 500; }
+  .eyebrow::before { content: ""; width: 24px; height: 1px; background: var(--color-accent); }
+  .section { padding-block: clamp(64px, 9vw, 128px); }
+  .section-head { margin-bottom: 52px; max-width: 720px; }
+  .section-head h2 { font-size: clamp(30px, 4vw, 48px); margin: 14px 0 0; letter-spacing: -0.025em;
+    font-weight: 500; }
+  .idx { font-size: 12px; letter-spacing: 0.16em; color: var(--color-neutral-500); }
+
+  /* nav */
+  .topbar { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(10px);
+    background: color-mix(in srgb, var(--color-bg) 78%, transparent); }
+  .topbar::after { content: ""; display: block; height: 1px;
+    background: linear-gradient(to right, transparent, var(--color-divider) 96px,
+      var(--color-divider) calc(100% - 96px), transparent); }
+  .topbar .nav { max-width: 1180px; margin: 0 auto; padding-inline: var(--gutter); }
+  .topnav-links { display: flex; gap: 28px; align-items: center; }
+  .brand-dot b { color: var(--color-accent); }
+
+  /* hero */
+  .hero { padding-top: clamp(64px, 9vw, 128px); padding-bottom: clamp(48px, 7vw, 96px);
+    position: relative; overflow: hidden; }
+  .hero::before { content: ""; position: absolute; top: -30%; right: -10%; width: 700px; height: 700px;
+    background: radial-gradient(circle, color-mix(in srgb, var(--color-accent) 22%, transparent), transparent 62%);
+    pointer-events: none; }
+  .hero-inner { max-width: 900px; position: relative; }
+  .hero h1 { font-size: clamp(46px, 8vw, 100px); line-height: 0.98; margin: 24px 0 0;
+    letter-spacing: -0.035em; font-weight: 500; }
+  .hero h1 .accent { color: var(--color-accent); }
+  .hero .lede { font-size: clamp(16px, 1.5vw, 20px); max-width: 52ch; margin-top: 28px;
+    color: var(--color-neutral-300); line-height: 1.6; }
+  .hero-actions { display: flex; gap: 14px; margin-top: 38px; flex-wrap: wrap; align-items: center; }
+  .btn.lg { font-size: 15px; padding: 12px 24px; }
+  .hero-meta { display: flex; gap: 28px; margin-top: 56px; flex-wrap: wrap; }
+  .hero-meta div .n { font-size: 30px; font-weight: 500; letter-spacing: -0.02em; }
+  .hero-meta div .l { font-size: 12px; color: var(--color-neutral-500); letter-spacing: 0.08em;
+    text-transform: uppercase; margin-top: 4px; }
+
+  /* full-bleed stat band (--color-section) */
+  .band { background:
+      radial-gradient(120% 140% at 15% 0%, var(--color-section-glow), transparent 55%),
+      var(--color-section); color: var(--color-text); }
+  .band .wrap { padding-block: clamp(48px, 7vw, 90px); }
+  .band-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+  .band-grid .n { font-size: clamp(38px, 5vw, 60px); font-weight: 500; letter-spacing: -0.03em;
+    line-height: 1; }
+  .band-grid .l { font-size: 13px; color: color-mix(in srgb, var(--color-text) 72%, transparent);
+    margin-top: 10px; }
+  .band-eyebrow { color: var(--color-accent-200); margin-bottom: 30px; }
+
+  /* placeholder image */
+  .ph-img { position: relative; width: 100%; aspect-ratio: 16/10; border-radius: var(--radius-md);
+    background-image: repeating-linear-gradient(135deg,
+      var(--color-neutral-900) 0 12px, var(--color-surface) 12px 24px); }
+  .ph-img span { position: absolute; left: 16px; bottom: 14px; font-size: 11px;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-neutral-400);
+    background: color-mix(in srgb, var(--color-bg) 70%, transparent); padding: 4px 9px;
+    border-radius: var(--radius-sm); }
+
+  /* about */
+  .about-grid { display: grid; grid-template-columns: 1fr 0.85fr; gap: clamp(40px, 6vw, 96px);
+    align-items: start; }
+  .about-grid p { font-size: 18px; line-height: 1.65; color: var(--color-neutral-200); }
+  .about-grid p + p { margin-top: 18px; }
+  .about-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 16px; }
+  .about-list li { display: grid; grid-template-columns: 26px 1fr; gap: 12px; font-size: 14px;
+    color: var(--color-neutral-300); line-height: 1.5; }
+  .about-list li i { color: var(--color-accent); font-size: 20px; margin-top: 1px; }
+  .about-list li b { color: var(--color-text); font-weight: 500; }
+
+  /* timeline */
+  .tl { display: grid; }
+  .tl-row { display: grid; grid-template-columns: 140px 1fr; gap: clamp(20px, 4vw, 56px);
+    padding: 28px 0; position: relative; }
+  .tl-row + .tl-row { border-top: 1px solid var(--color-divider); }
+  .tl-when { font-size: 15px; color: var(--color-accent-300); font-weight: 500; }
+  .tl-role { font-size: 22px; font-weight: 500; letter-spacing: -0.01em; }
+  .tl-co { color: var(--color-neutral-500); font-size: 14px; margin-top: 3px; }
+  .tl-desc { margin-top: 12px; font-size: 14px; max-width: 64ch; color: var(--color-neutral-300);
+    line-height: 1.6; }
+  .tl-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 16px; }
+
+  /* projects */
+  .proj-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 32px); }
+  .proj { display: flex; flex-direction: column; padding: 20px; transition: transform .3s cubic-bezier(.2,.7,.2,1); }
+  .proj:hover { transform: translateY(-4px); }
+  .proj .img-wrap { margin-bottom: 20px; }
+  .proj-num { font-size: 12px; letter-spacing: 0.16em; color: var(--color-neutral-500); }
+  .proj h3 { font-size: 24px; margin: 12px 0 6px; letter-spacing: -0.015em; font-weight: 500; }
+  .proj p { font-size: 14px; color: var(--color-neutral-300); max-width: 46ch; line-height: 1.55; }
+  .proj .tags { display: flex; gap: 6px; flex-wrap: wrap; margin: 16px 0 20px; }
+  .proj .go { margin-top: auto; }
+  .proj .go a { display: inline-flex; align-items: center; gap: 8px; color: var(--color-accent-300);
+    text-decoration: none; font-weight: 500; font-size: 14px; }
+  .proj .go a i { transition: transform .25s; }
+  .proj .go a:hover i { transform: translateX(4px); }
+
+  /* stack */
+  .stack-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .stack-col h4 { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--color-accent-300); margin: 0 0 18px; font-weight: 500; }
+  .stack-col ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+  .stack-col li { font-size: 18px; font-weight: 500; display: flex; align-items: center; gap: 10px;
+    color: var(--color-neutral-100); }
+  .stack-col li i { color: var(--color-accent); font-size: 16px; }
+
+  /* testimonials */
+  .quotes { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 32px); }
+  .quote { padding: 30px; }
+  .quote blockquote { margin: 0; font-size: 21px; line-height: 1.4; letter-spacing: -0.01em;
+    font-weight: 500; color: var(--color-neutral-100); }
+  .quote .qmark { font-size: 28px; color: var(--color-accent); line-height: 1; }
+  .quote .who { display: flex; align-items: center; gap: 12px; margin-top: 24px; }
+  .quote .avatar { width: 40px; height: 40px; border-radius: 50%;
+    background: var(--color-accent-800); flex: none; }
+  .quote .who b { font-weight: 500; }
+  .quote .who span { display: block; font-size: 12px; color: var(--color-neutral-500); }
+
+  /* contact */
+  .contact-grid { display: grid; grid-template-columns: 1fr 0.9fr; gap: clamp(40px, 6vw, 96px);
+    align-items: start; }
+  .contact h2 { font-size: clamp(36px, 5vw, 62px); letter-spacing: -0.03em; line-height: 1;
+    font-weight: 500; }
+  .contact .lede { font-size: 17px; margin-top: 22px; max-width: 42ch; color: var(--color-neutral-300);
+    line-height: 1.6; }
+  .contact-meta { margin-top: 36px; display: grid; gap: 4px; }
+  .contact-meta a { display: flex; align-items: center; gap: 14px; padding: 14px 0;
+    text-decoration: none; color: var(--color-neutral-100); font-weight: 500; font-size: 16px;
+    transition: color .2s; }
+  .contact-meta a + a { border-top: 1px solid var(--color-divider); }
+  .contact-meta a i { color: var(--color-accent); font-size: 22px; }
+  .contact-meta a:hover { color: var(--color-accent); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .field { margin-bottom: 16px; }
+
+  footer .wrap { display: flex; justify-content: space-between; align-items: center;
+    padding-block: 32px; flex-wrap: wrap; gap: 12px; font-size: 13px; color: var(--color-neutral-500);
+    border-top: 1px solid var(--color-divider); }
+
+  @media (max-width: 900px) {
+    .hero-inner { max-width: none; }
+    .about-grid, .proj-grid, .quotes, .contact-grid { grid-template-columns: 1fr; }
+    .stack-grid, .band-grid { grid-template-columns: 1fr 1fr; }
+  }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <nav class="nav">
+    <span class="nav-brand brand-dot">Karel Pelčák<b>.</b></span>
+    <div class="topnav-links">
+      <a href="#about">O mně</a>
+      <a href="#work">Zkušenosti</a>
+      <a href="#projects">Projekty</a>
+      <a href="#stack">Stack</a>
+      <a class="btn btn-primary" href="#contact">Kontakt</a>
+    </div>
+  </nav>
+</div>
+
+<header class="hero">
+  <div class="wrap hero-inner">
+    <span class="eyebrow reveal in">Full-Stack Developer · Cloudflare Stack</span>
+    <h1 class="reveal in">Stavím rychlé produkty<br>na <span class="accent">hraně sítě.</span></h1>
+    <p class="lede reveal in">Full-stack vývojář se specializací na edge computing. Od návrhu API po pixel-perfect UI — NextJS, Hono a Cloudflare Workers. Based in Prague, working worldwide.</p>
+    <div class="hero-actions reveal in">
+      <a class="btn btn-primary lg" href="#contact">Napište mi <i class="ph ph-arrow-right"></i></a>
+      <a class="btn btn-secondary lg" href="#projects">Vybrané projekty</a>
+    </div>
+    <div class="hero-meta reveal in">
+      <div><div class="n">8+</div><div class="l">Let praxe</div></div>
+      <div><div class="n">40+</div><div class="l">Projektů</div></div>
+      <div><div class="n">~30ms</div><div class="l">Cold start</div></div>
+    </div>
+  </div>
+</header>
+
+<section class="section wrap" id="about">
+  <div class="section-head reveal">
+    <span class="eyebrow">O mně — 01 / 06</span>
+    <h2>Inženýr, který doručuje.</h2>
+  </div>
+  <div class="about-grid reveal">
+    <div>
+      <p>Jmenuji se Karel a posledních osm let stavím webové produkty end-to-end. Baví mě práce na hraně — doslova: většinu backendu dnes provozuji na Cloudflare Workers, kde se latence měří v milisekundách a škálování řeším architekturou, ne fakturou.</p>
+      <p>Nejsem jen „na frontend“ ani „na backend“. Vezmu produkt od whiteboardu přes datový model a API až po přístupné rozhraní — a nasadím ho ještě týž den.</p>
+    </div>
+    <ul class="about-list">
+      <li><i class="ph ph-lightning"></i><span><b>Edge-first architektura.</b> Workers, D1, R2, Durable Objects — globální distribuce bez DevOps armády.</span></li>
+      <li><i class="ph ph-shield-check"></i><span><b>Typová bezpečnost od DB po UI.</b> Sdílené kontrakty mezi Hono/NestJS API a NextJS/Nuxt klientem.</span></li>
+      <li><i class="ph ph-cpu"></i><span><b>Systémové jazyky, když je potřeba.</b> Go a Rust pro výkonné nástroje a datové pipeline.</span></li>
+      <li><i class="ph ph-ruler"></i><span><b>Design-aware.</b> Rozumím gridu, typografii a přístupnosti — ne jen kódu.</span></li>
+    </ul>
+  </div>
+</section>
+
+<div class="band">
+  <div class="wrap reveal">
+    <span class="eyebrow band-eyebrow">By the numbers</span>
+    <div class="band-grid">
+      <div><div class="n">8+</div><div class="l">Let profesionální praxe</div></div>
+      <div><div class="n">40+</div><div class="l">Dodaných projektů</div></div>
+      <div><div class="n">18</div><div class="l">Spokojených klientů</div></div>
+      <div><div class="n">99.99%</div><div class="l">Uptime na edge</div></div>
+    </div>
+  </div>
+</div>
+
+<section class="section wrap" id="work">
+  <div class="section-head reveal">
+    <span class="eyebrow">Experience — 02 / 06</span>
+    <h2>Časová osa</h2>
+  </div>
+  <div class="tl">
+    <div class="tl-row reveal">
+      <div class="tl-when">2023 — nyní</div>
+      <div>
+        <div class="tl-role">Independent Full-Stack Contractor</div>
+        <div class="tl-co">Vlastní praxe · Remote</div>
+        <p class="tl-desc">Návrh a dodávka edge-first aplikací pro scale-upy napříč EU. Od architektury po produkci — obvykle solo nebo jako tech lead malého týmu.</p>
+        <div class="tl-tags"><span class="tag tag-accent">Cloudflare</span><span class="tag tag-accent">Hono</span><span class="tag tag-neutral">NextJS</span><span class="tag tag-neutral">Nuxt</span></div>
+      </div>
+    </div>
+    <div class="tl-row reveal">
+      <div class="tl-when">2021 — 2023</div>
+      <div>
+        <div class="tl-role">Senior Full-Stack Engineer</div>
+        <div class="tl-co">Fintech scale-up · Praha</div>
+        <p class="tl-desc">Vedl jsem přechod monolitu na service-oriented backend v NestJS a Postgresu, přepsal jsem klienta do Nuxtu a zavedl typové kontrakty end-to-end.</p>
+        <div class="tl-tags"><span class="tag tag-accent">NestJS</span><span class="tag tag-neutral">Postgres</span><span class="tag tag-neutral">Nuxt</span></div>
+      </div>
+    </div>
+    <div class="tl-row reveal">
+      <div class="tl-when">2019 — 2021</div>
+      <div>
+        <div class="tl-role">Full-Stack Developer</div>
+        <div class="tl-co">Produktová agentura · Brno</div>
+        <p class="tl-desc">Dodával jsem klientské produkty na React/Node stacku, postavil interní design systém a nástroje pro rychlejší delivery.</p>
+        <div class="tl-tags"><span class="tag tag-neutral">React</span><span class="tag tag-neutral">Node</span><span class="tag tag-neutral">Tailwind</span></div>
+      </div>
+    </div>
+    <div class="tl-row reveal">
+      <div class="tl-when">2017 — 2019</div>
+      <div>
+        <div class="tl-role">Junior Developer</div>
+        <div class="tl-co">Softwarové studio · Praha</div>
+        <p class="tl-desc">Start kariéry — PHP a JS, první produkční nasazení a pochopení, že rychlost je feature.</p>
+        <div class="tl-tags"><span class="tag tag-neutral">JavaScript</span><span class="tag tag-neutral">PHP</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section wrap" id="projects">
+  <div class="section-head reveal">
+    <span class="eyebrow">Selected work — 03 / 06</span>
+    <h2>Vybrané projekty</h2>
+  </div>
+  <div class="proj-grid">
+    <article class="card proj reveal">
+      <div class="img-wrap"><div class="lighten"><div class="ph-img"><span>project screenshot — edge commerce</span></div></div></div>
+      <span class="proj-num">P.01</span>
+      <h3>Edge Commerce Platform</h3>
+      <p>Headless e-shop běžící kompletně na Cloudflare Workers. Katalog v D1, média v R2, košík v Durable Objects — sub-50ms TTFB globálně.</p>
+      <div class="tags"><span class="tag tag-outline">Nuxt</span><span class="tag tag-outline">Hono</span><span class="tag tag-outline">D1</span><span class="tag tag-outline">R2</span></div>
+      <div class="go"><a href="#">Case study <i class="ph ph-arrow-up-right"></i></a></div>
+    </article>
+    <article class="card proj reveal">
+      <div class="img-wrap"><div class="lighten"><div class="ph-img"><span>project screenshot — realtime analytics</span></div></div></div>
+      <span class="proj-num">P.02</span>
+      <h3>Realtime Analytics Dashboard</h3>
+      <p>Streamovaný dashboard nad NestJS a Postgresem s WebSocket vrstvou. Miliony eventů denně, agregace v reálném čase.</p>
+      <div class="tags"><span class="tag tag-outline">NestJS</span><span class="tag tag-outline">Postgres</span><span class="tag tag-outline">NextJS</span></div>
+      <div class="go"><a href="#">Case study <i class="ph ph-arrow-up-right"></i></a></div>
+    </article>
+    <article class="card proj reveal">
+      <div class="img-wrap"><div class="lighten"><div class="ph-img"><span>project screenshot — deploy CLI</span></div></div></div>
+      <span class="proj-num">P.03</span>
+      <h3>Edgectl — Deploy Toolchain</h3>
+      <p>CLI pro orchestraci deployů edge funkcí, psané v Rustu s Go pluginy. Paralelní buildy, atomické rollouty, zero-downtime.</p>
+      <div class="tags"><span class="tag tag-outline">Rust</span><span class="tag tag-outline">Go</span><span class="tag tag-outline">Cloudflare</span></div>
+      <div class="go"><a href="#">Case study <i class="ph ph-arrow-up-right"></i></a></div>
+    </article>
+    <article class="card proj reveal">
+      <div class="img-wrap"><div class="lighten"><div class="ph-img"><span>project screenshot — AI content API</span></div></div></div>
+      <span class="proj-num">P.04</span>
+      <h3>AI Content API</h3>
+      <p>Generativní obsahové API postavené na Workers AI a Pythonu. Fronta úloh, cache odpovědí a fér rate-limiting per tenant.</p>
+      <div class="tags"><span class="tag tag-outline">Python</span><span class="tag tag-outline">Workers AI</span><span class="tag tag-outline">Hono</span></div>
+      <div class="go"><a href="#">Case study <i class="ph ph-arrow-up-right"></i></a></div>
+    </article>
+  </div>
+</section>
+
+<section class="section wrap" id="stack">
+  <div class="section-head reveal">
+    <span class="eyebrow">Toolbox — 04 / 06</span>
+    <h2>Tech stack</h2>
+  </div>
+  <div class="stack-grid reveal">
+    <div class="stack-col"><h4>Frontend</h4><ul><li><i class="ph ph-diamond"></i>NextJS</li><li><i class="ph ph-diamond"></i>Nuxt</li><li><i class="ph ph-diamond"></i>Tailwind</li></ul></div>
+    <div class="stack-col"><h4>Backend</h4><ul><li><i class="ph ph-diamond"></i>Hono</li><li><i class="ph ph-diamond"></i>NestJS</li><li><i class="ph ph-diamond"></i>Go</li><li><i class="ph ph-diamond"></i>Rust</li><li><i class="ph ph-diamond"></i>Python</li></ul></div>
+    <div class="stack-col"><h4>Data</h4><ul><li><i class="ph ph-diamond"></i>Postgres</li><li><i class="ph ph-diamond"></i>D1</li><li><i class="ph ph-diamond"></i>R2</li></ul></div>
+    <div class="stack-col"><h4>Infra</h4><ul><li><i class="ph ph-diamond"></i>Cloudflare</li><li><i class="ph ph-diamond"></i>Vercel</li><li><i class="ph ph-diamond"></i>Workers</li></ul></div>
+  </div>
+</section>
+
+<section class="section wrap">
+  <div class="section-head reveal">
+    <span class="eyebrow">Reference — 05 / 06</span>
+    <h2>Co říkají klienti</h2>
+  </div>
+  <div class="quotes">
+    <div class="card quote reveal">
+      <div class="qmark">“</div>
+      <blockquote>Karel dodal to, co dva předchozí týmy nezvládly za rok — a běží to rychleji, než jsme čekali.</blockquote>
+      <div class="who"><div class="avatar"></div><div><b>Tomáš Havel</b><span>CTO, Fintech scale-up</span></div></div>
+    </div>
+    <div class="card quote reveal">
+      <div class="qmark">“</div>
+      <blockquote>Vzácná kombinace: rozumí byznysu, kódu i designu. Komunikace na jedničku.</blockquote>
+      <div class="who"><div class="avatar"></div><div><b>Lucie Marešová</b><span>Product Lead, SaaS</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section wrap" id="contact">
+  <div class="contact-grid">
+    <div class="reveal">
+      <span class="eyebrow">Contact — 06 / 06</span>
+      <h2>Máte projekt<br>na hraně?</h2>
+      <p class="lede">Beru omezený počet zakázek. Napište mi pár řádků o tom, co stavíte — ozvu se do 24 hodin.</p>
+      <div class="contact-meta">
+        <a href="mailto:ahoj@karelpelcak.dev"><i class="ph ph-envelope-simple"></i>ahoj@karelpelcak.dev</a>
+        <a href="#"><i class="ph ph-github-logo"></i>github.com/karelpelcak</a>
+        <a href="#"><i class="ph ph-linkedin-logo"></i>linkedin.com/in/karelpelcak</a>
+      </div>
+    </div>
+    <form class="card elev-md reveal" style="padding:28px" onsubmit="return false">
+      <div class="form-row">
+        <div class="field"><label>Jméno</label><input class="input" placeholder="Vaše jméno"></div>
+        <div class="field"><label>E-mail</label><input class="input" type="email" placeholder="vy@firma.cz"></div>
+      </div>
+      <div class="field"><label>Rozpočet</label>
+        <div class="seg" role="group" style="width:100%">
+          <label class="seg-opt" style="flex:1;justify-content:center"><input type="radio" name="b">&lt; 5k €</label>
+          <label class="seg-opt" style="flex:1;justify-content:center"><input type="radio" name="b" checked>5–20k €</label>
+          <label class="seg-opt" style="flex:1;justify-content:center"><input type="radio" name="b">20k €+</label>
+        </div>
+      </div>
+      <div class="field"><label>Zpráva</label><textarea class="input" placeholder="Co stavíte?"></textarea></div>
+      <button class="btn btn-primary btn-block">Odeslat poptávku</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Karel Pelčák — Full-Stack Developer</span>
+    <span>Postaveno na hraně · Cloudflare Workers</span>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((es) => {
+    es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

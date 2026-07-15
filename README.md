@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio — Karel Pelčák
 
-## Getting Started
+Osobní portfolio full-stack vývojáře. Jednostránkový web s tmavým „Nocturne"
+designem, sekce Hero → O mně → Statistiky → Zkušenosti → Projekty → Tech stack →
+Kontakt s funkčním kontaktním formulářem.
 
-First, run the development server:
+## Stack
+
+- **Next.js** (App Router, React Server Components)
+- **Tailwind CSS** v4
+- **Inter** přes `next/font/google`
+- **Phosphor Icons** (`@phosphor-icons/react`)
+- **Resend** pro odesílání e-mailů z kontaktního formuláře
+- Nasazeno na **Vercel**
+
+## Vývoj
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+bun install
+bun run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+App poběží na [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Proměnné prostředí
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Zkopíruj `.env.example` do `.env.local` a vyplň:
 
-## Learn More
+| Proměnná         | Popis                                                        |
+| ---------------- | ------------------------------------------------------------ |
+| `RESEND_API_KEY` | API klíč z [resend.com](https://resend.com) (začíná `re_`)   |
+| `CONTACT_FROM`   | Odesílatel na ověřené doméně, např. `Portfolio <noreply@…>`  |
+| `CONTACT_TO`     | Adresa, kam se doručí poptávky z formuláře                   |
 
-To learn more about Next.js, take a look at the following resources:
+Kontaktní formulář posílá `POST` na `app/api/contact/route.ts`, který přes Resend
+odešle e-mail (s reply-to na adresu odesílatele). Bez nastavených proměnných
+endpoint vrátí `500` a nic neodešle.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Struktura
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+app/            layout, page, globals.css, api/contact route handler
+components/     Nav, Hero, About, StatBand, Timeline, Projects, TechStack, Contact, Footer, Reveal
+lib/content.ts  veškerý text a data sekcí jako typed konstanty
+reference/      původní návrhové reference (HTML/CSS) designu Nocturne
+```
 
-## Deploy on Vercel
+## Build
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+bun run build
+```
