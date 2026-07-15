@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import Reveal from "@/components/Reveal";
 import { projects } from "@/lib/content";
@@ -13,10 +14,13 @@ export default function Projects() {
         {projects.map((p) => (
           <Reveal as="article" className="card proj" key={p.num}>
             <div className="img-wrap">
-              <div className="lighten">
-                <div className="ph-img">
-                  <span>{p.screenshot}</span>
-                </div>
+              <div className="proj-shot">
+                <Image
+                  src={p.image}
+                  alt={p.screenshot}
+                  fill
+                  sizes="(max-width: 900px) 90vw, 560px"
+                />
               </div>
             </div>
             <span className="proj-num">{p.num}</span>

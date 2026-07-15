@@ -99,7 +99,8 @@ export const timeline: {
 export const projects = [
   {
     num: "P.01",
-    screenshot: "project screenshot — kpworkspace",
+    screenshot: "Náhled aplikace kpworkspace",
+    image: "/kpworkspace.png",
     title: "kpworkspace",
     desc: "Rychlá multiplatformní desktopová aplikace, která spojuje terminál, editor, náhled prohlížeče, Git, Kanban, skills a paměť do soustředěných workspaců — s podporou MCP a lokálním převodem řeči na text.",
     tags: [
@@ -116,7 +117,8 @@ export const projects = [
   },
   {
     num: "P.02",
-    screenshot: "project screenshot — doggys.net",
+    screenshot: "Náhled platformy doggys.net",
+    image: "/doggys.png",
     title: "doggys.net",
     desc: "Sociální platforma a komunita majitelů psů — místo, kde spolu budují příjemné prostředí pro pejsky.",
     tags: ["Vinext", "Hono", "Cloudflare", "Tailwind"],
@@ -124,7 +126,8 @@ export const projects = [
   },
   {
     num: "P.03",
-    screenshot: "project screenshot — promethiq.eu",
+    screenshot: "Náhled platformy promethiq.eu",
+    image: "/PrometIQ.webp",
     title: "promethiq.eu",
     desc: "AI-powered trading platforma — obchodní rozhodování a analýza trhu poháněné umělou inteligencí.",
     tags: ["Python", "NextJS", "Hono", "Cloudflare"],
@@ -132,7 +135,8 @@ export const projects = [
   },
   {
     num: "P.04",
-    screenshot: "project screenshot — kphub.cz",
+    screenshot: "Náhled platformy kphub.cz",
+    image: "/kphub.png",
     title: "kphub.cz",
     desc: "Platforma, kde nabízím své služby jako full-stack developer — přehled práce, dovedností a kontakt na jednom místě.",
     tags: ["NextJS", "Vercel"],
