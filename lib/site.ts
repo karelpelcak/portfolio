@@ -7,7 +7,7 @@ export const siteConfig = {
   name: "Karel Pelčák",
   title: "Karel Pelčák — Full-Stack Developer",
   description:
-    "Full-stack vývojář se specializací na edge computing. Od návrhu API po pixel-perfect UI — NextJS, Hono a Cloudflare Workers. Based in Prague, working worldwide.",
+    "Full-stack vývojář se specializací na edge computing. Od návrhu API po pixel-perfect UI — NextJS, Hono a Cloudflare Workers. Based in Zlín, working worldwide.",
   locale: "cs_CZ",
   keywords: [
     "Karel Pelčák",
@@ -22,7 +22,7 @@ export const siteConfig = {
     "TypeScript",
     "Rust",
     "web development",
-    "Praha",
+    "Zlín",
     "Brno",
     "freelance developer",
   ],

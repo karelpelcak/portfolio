@@ -5,26 +5,37 @@ export default function About() {
   return (
     <section className="section wrap" id="about">
       <Reveal className="section-head">
-        <span className="eyebrow">O mně — 01 / 05</span>
+        <div className="section-label">
+          <b>O mně</b> — Field notes
+        </div>
         <h2>Inženýr, který doručuje.</h2>
+        <p>
+          Nejsem agentura. Jsem jeden člověk, který vezme nápad od whiteboardu až
+          po produkci — a drží ho v provozu.
+        </p>
       </Reveal>
-      <Reveal className="about-grid">
-        <div>
+
+      <div className="about-grid">
+        <Reveal className="about-copy">
           {aboutParagraphs.map((p, i) => (
             <p key={i}>{p}</p>
           ))}
-        </div>
-        <ul className="about-list">
+        </Reveal>
+
+        <Reveal as="ul" className="about-list" style={{ transitionDelay: "80ms" } as React.CSSProperties}>
           {aboutList.map(({ icon: Icon, lead, text }) => (
-            <li key={lead}>
-              <Icon size={20} />
+            <li className="about-item" key={lead}>
+              <span className="about-icon">
+                <Icon size={20} weight="fill" />
+              </span>
               <span>
-                <b>{lead}</b> {text}
+                <b>{lead}</b>
+                <span>{text}</span>
               </span>
             </li>
           ))}
-        </ul>
-      </Reveal>
+        </Reveal>
+      </div>
     </section>
   );
 }

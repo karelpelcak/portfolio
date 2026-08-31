@@ -49,10 +49,12 @@ export default function Contact() {
   }
 
   return (
-    <section className="section wrap" id="contact">
+    <section className="section wrap contact" id="contact">
       <div className="contact-grid">
         <Reveal>
-          <span className="eyebrow">Contact — 05 / 05</span>
+          <div className="section-label">
+            <b>Kontakt</b> — Let&apos;s build
+          </div>
           <h2>
             Máte projekt
             <br />
@@ -60,21 +62,49 @@ export default function Contact() {
           </h2>
           <p className="lede">
             Beru omezený počet zakázek. Napište mi pár řádků o tom, co stavíte —
-            ozvu se do 24 hodin.
+            ozvu se do 24 hodin s dalším krokem.
           </p>
+
           <div className="contact-meta">
             {contactMeta.map(({ icon: Icon, label, href }) => (
-              <a key={label} href={href}>
-                <Icon size={22} />
+              <a key={label} href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noopener noreferrer" : undefined}>
+                <span className="contact-icon">
+                  <Icon size={16} weight="bold" />
+                </span>
                 {label}
               </a>
             ))}
           </div>
+
+          <div
+            style={{
+              marginTop: 18,
+              display: "flex",
+              gap: 8,
+              alignItems: "center",
+              fontFamily: "var(--font-mono)",
+              fontSize: 11,
+              letterSpacing: "0.06em",
+              color: "var(--steel-dim)",
+            }}
+          >
+            <i
+              style={{
+                width: 7,
+                height: 7,
+                borderRadius: 999,
+                background: "#1ed760",
+                boxShadow: "0 0 0 4px rgba(30,215,96,.14)",
+                display: "inline-block",
+              }}
+            />
+            Odpovídám do 24 h · průměr 4 h
+          </div>
         </Reveal>
+
         <Reveal
           as="form"
-          className="card elev-md"
-          style={{ padding: 28 }}
+          className="form-card"
           onSubmit={onSubmit}
         >
           <div className="form-row">
@@ -102,15 +132,12 @@ export default function Contact() {
               />
             </div>
           </div>
+
           <div className="field">
             <label>Rozpočet</label>
-            <div className="seg" role="group" style={{ width: "100%" }}>
+            <div className="seg" role="group">
               {budgets.map((b) => (
-                <label
-                  key={b}
-                  className="seg-opt"
-                  style={{ flex: 1, justifyContent: "center" }}
-                >
+                <label key={b} className="seg-opt">
                   <input
                     type="radio"
                     name="b"
@@ -122,19 +149,20 @@ export default function Contact() {
               ))}
             </div>
           </div>
+
           <div className="field">
             <label htmlFor="message">Zpráva</label>
             <textarea
               id="message"
               className="input"
-              placeholder="Co stavíte?"
+              placeholder="Co stavíte? Stack, deadline, rozpočet…"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               required
             />
           </div>
 
-          {/* honeypot — skrytý před uživateli, chytá boty */}
+          {/* honeypot */}
           <div aria-hidden="true" style={{ position: "absolute", left: "-9999px" }}>
             <label htmlFor="company">Firma</label>
             <input
@@ -151,31 +179,52 @@ export default function Contact() {
             className="btn btn-primary btn-block"
             type="submit"
             disabled={status === "sending"}
+            style={{ marginTop: 6 }}
           >
             {status === "sending" ? "Odesílám…" : "Odeslat poptávku"}
           </button>
+
+          <p
+            style={{
+              marginTop: 10,
+              fontSize: 11,
+              color: "var(--steel-dim)",
+              textAlign: "center",
+              fontFamily: "var(--font-mono)",
+            }}
+          >
+            Odesláním souhlasíte se zpracováním údajů pro odpověď.
+          </p>
 
           {status === "success" && (
             <p
               role="status"
               style={{
-                marginTop: 12,
-                marginBottom: 0,
-                fontSize: 14,
-                color: "var(--color-accent-300)",
+                marginTop: 14,
+                fontSize: 13,
+                color: "#1ed760",
+                background: "rgba(30,215,96,.08)",
+                border: "1px solid rgba(30,215,96,.18)",
+                padding: "10px 12px",
+                borderRadius: 10,
+                lineHeight: 1.5,
               }}
             >
-              Díky! Zpráva odešla, ozvu se do 24 hodin.
+              Díky! Zpráva odešla — ozvu se do 24 hodin.
             </p>
           )}
           {status === "error" && (
             <p
               role="alert"
               style={{
-                marginTop: 12,
-                marginBottom: 0,
-                fontSize: 14,
-                color: "var(--color-neutral-300)",
+                marginTop: 14,
+                fontSize: 13,
+                color: "var(--signal-soft)",
+                background: "var(--signal-faint)",
+                border: "1px solid rgba(255,59,31,.18)",
+                padding: "10px 12px",
+                borderRadius: 10,
+                lineHeight: 1.5,
               }}
             >
               {error}

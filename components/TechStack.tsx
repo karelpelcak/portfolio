@@ -1,4 +1,3 @@
-import { Diamond } from "@phosphor-icons/react/dist/ssr";
 import Reveal from "@/components/Reveal";
 import { stack } from "@/lib/content";
 
@@ -6,24 +5,28 @@ export default function TechStack() {
   return (
     <section className="section wrap" id="stack">
       <Reveal className="section-head">
-        <span className="eyebrow">Toolbox — 04 / 05</span>
+        <div className="section-label">
+          <b>Stack</b> — Toolbox
+        </div>
         <h2>Tech stack</h2>
+        <p>Vybrané nástroje, se kterými doručuju nejrychleji a nejspolehlivěji.</p>
       </Reveal>
-      <Reveal className="stack-grid">
+
+      <div className="stack-grid">
         {stack.map((col) => (
-          <div className="stack-col" key={col.title}>
+          <Reveal className="stack-col" key={col.title}>
             <h4>{col.title}</h4>
             <ul>
               {col.items.map((item) => (
                 <li key={item}>
-                  <Diamond size={16} />
+                  <i className="stack-dot" aria-hidden />
                   {item}
                 </li>
               ))}
             </ul>
-          </div>
+          </Reveal>
         ))}
-      </Reveal>
+      </div>
     </section>
   );
 }

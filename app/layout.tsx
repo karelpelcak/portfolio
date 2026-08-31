@@ -1,15 +1,29 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Space_Grotesk, Instrument_Sans, JetBrains_Mono } from "next/font/google";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { siteConfig } from "@/lib/site";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+const space = Space_Grotesk({
+  variable: "--font-space",
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  display: "swap",
+});
+
+const instrument = Instrument_Sans({
+  variable: "--font-instrument",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
+  display: "swap",
+});
+
+const mono = JetBrains_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
+  weight: ["400", "500"],
   display: "swap",
 });
 
@@ -81,14 +95,14 @@ export default function RootLayout({
     ],
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Praha",
+      addressLocality: "Zlín",
       addressCountry: "CZ",
     },
     email: "spoluprace@karelpelcak.eu",
   };
 
   return (
-    <html lang="cs" className={inter.variable}>
+    <html lang="cs" className={`${space.variable} ${instrument.variable} ${mono.variable}`}>
       <body>
         {children}
         <Script
