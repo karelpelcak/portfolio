@@ -67,9 +67,15 @@ const links: LinkItem[] = [
     icon: InstagramLogo,
   },
   {
-    label: "X (Twitter)",
-    sub: "@KarelPelcakDev",
-    href: "https://x.com/KarelPelcakDev",
+    label: "X — osobní",
+    sub: "@KarelPelcak_",
+    href: "https://x.com/KarelPelcak_",
+    icon: XLogo,
+  },
+  {
+    label: "X — programování",
+    sub: "@kp_software_ai",
+    href: "https://x.com/kp_software_ai",
     icon: XLogo,
   },
   {
